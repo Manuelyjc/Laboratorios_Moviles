@@ -29,7 +29,8 @@ https://reactnative.dev/docs/environment-setup
 
 # Descripción de los archivos
 
-*Este código define un componente de botón personalizado para nuestra calculadora en una aplicación de React Native. El componente CalculatorButton acepta varias propiedades como entrada y genera un botón interactivo que ejecuta una función (onPress) cuando se presiona.
+# CalculatorButton.tsx
+Este código define un componente de botón personalizado para nuestra calculadora en una aplicación de React Native. El componente CalculatorButton acepta varias propiedades como entrada y genera un botón interactivo que ejecuta una función (onPress) cuando se presiona.
 
 label: Define el texto que aparecerá en el botón.
 color: Especifica el color de fondo del botón. Por defecto, es colors.darkGray.
