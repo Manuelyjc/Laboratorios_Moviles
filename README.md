@@ -7,6 +7,7 @@ https://reactnative.dev/docs/environment-setup
    # Crear proyecto
      -npx react-native@latest init AwesomeProject (esperar que se instalen los paquetes).
      -cd C/:dirección-de-la-carpeta-del-laboratorio
+     -dir (revisa los  paquetes que se instalo)
      -npx react-native run-android (ejecutar la app para el emulador)
 
 # Boton pressable, creado con react native (nueva versión de boton de  app)
