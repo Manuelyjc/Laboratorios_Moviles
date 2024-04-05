@@ -5,10 +5,11 @@ Crear aplicaciones con react native
 https://reactnative.dev/docs/environment-setup
 
    # Crear proyecto
-     -npx react-native@latest init AwesomeProject (esperar que se instalen los paquetes).
+     -npx create-expo-app --template (crear proyecto).
      -cd C/:dirección-de-la-carpeta-del-laboratorio
-     -dir (revisa los  paquetes que se instalo)
-     -npx react-native run-android (ejecutar la app para el emulador)
+     -npm install (instalar dependencias del proyecto).
+     -expo start
+     -npx expo start (ejecutar la app para el emulador)
 
 # Estructura dentro de la carpeta src
  -src/
