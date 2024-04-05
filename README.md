@@ -10,6 +10,23 @@ https://reactnative.dev/docs/environment-setup
      -dir (revisa los  paquetes que se instalo)
      -npx react-native run-android (ejecutar la app para el emulador)
 
+# Estructura dentro de la carpeta src
+ -src/
+
+     -Component/
+       |_ CalculatorButton.tsx
+
+      -Config/theme
+       |_ app-theme.tsx
+      
+      -hooks/
+       |_ useCalculator.tsx
+
+      -screens/
+       |_ CalculatorScreen.tsx
+      
+-App.tsx
+
 # Boton pressable, creado con react native (nueva versión de boton de  app)
 https://reactnative.dev/docs/components-and-apis
 
