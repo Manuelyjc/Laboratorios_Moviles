@@ -29,7 +29,15 @@ https://reactnative.dev/docs/environment-setup
 
 # Descripción de los archivos
 
-     * CalculatorButton.tsx: Este código define un componente de botón personalizado para una calculadora en una aplicación de React Native. El componente `CalculatorButton` acepta propiedades como `label` para el texto del botón y `onPress` para la función que se ejecutará cuando se presione el botón. También permite especificar el color del botón (`color`), si debe tener el doble de tamaño (`doubleSize`), y si el texto debe ser negro (`blackText`). El botón se vuelve interactivo utilizando `Pressable` de React Native y cambia su opacidad cuando se presiona. Además, el texto del botón puede ser negro o blanco según la configuración de `blackText`.
+*Este código define un componente de botón personalizado para nuestra calculadora en una aplicación de React Native. El componente CalculatorButton acepta varias propiedades como entrada y genera un botón interactivo que ejecuta una función (onPress) cuando se presiona.
+
+label: Define el texto que aparecerá en el botón.
+color: Especifica el color de fondo del botón. Por defecto, es colors.darkGray.
+doubleSize: Indica si el botón debe tener el doble de tamaño. Por defecto, es false.
+blackText: Indica si el texto del botón debe ser negro. Por defecto, es false.
+onPress: Es la función que se ejecutará cuando se presione el botón.
+
+El componente utiliza Pressable de React Native para la interactividad del botón y aplica estilos condicionales basados en si el botón está presionado o no. Además, permite personalizar el color del texto del botón según la propiedad blackText.
 
 
 # Boton pressable, creado con react native (nueva versión de boton de  app)
