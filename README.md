@@ -1,5 +1,5 @@
-# Laboratorios_Moviles
-Crear aplicaciones con react native 
+# lab02-aplicación-react-frontend-nativo
+Este el repositorio destinado para el laboratorio 2 de la calculadora con REACT NATIVE. Por Johan Ramírez y Manuel Millán
 
 # Crear laboratorio de la manera nativa
 https://reactnative.dev/docs/environment-setup
