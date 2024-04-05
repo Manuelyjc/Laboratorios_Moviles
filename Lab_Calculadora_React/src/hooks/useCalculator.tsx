@@ -1,89 +1,160 @@
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from 'react';
 
-// Enumeración para los operadores aritméticos
 enum Operator {
-    add = '+',
-    subtract = '-',
-    multiply = '*',
-    divide = '÷',
+  add = '+',
+  subtract = '-',
+  multiply = 'x',
+  divide = '÷',
 }
-
-// Hook personalizado para la calculadora
 export const useCalculator = () => {
-    // Hooks de estado
-    const [number, setNumber] = useState('0');
-    const [prevNumber, setPrevNumber] = useState('0');
-    const lastOperation = useRef<Operator>(); // Referencia mutable para almacenar el último operador
-    const [formula, setFormula] = useState(''); // Fórmula actual
+  const [formula, setFormula] = useState('');
+  const [number, setNumber] = useState('0');
+  const [prevNumber, setPrevNumber] = useState('0');
+  const lastOperation = useRef<Operator>();
 
-    // Función para limpiar la calculadora
-    const clean = () => {
-        setNumber('0');
-        setPrevNumber('0');
-        lastOperation.current = undefined;
-        setFormula('');
-    };
+  useEffect(() => {
+    if (lastOperation.current) {
+      const firstFormulaPart = formula.split(' ').at(0);
+      setFormula(`${firstFormulaPart} ${lastOperation.current} ${number}`);
+    } else {
+      setFormula(number);
+    }
+  }, [number]);
 
-    // Función para eliminar el último dígito
-    const deleteOperation = () => {
-        // Lógica para eliminar el último dígito
-    };
+  useEffect(() => {
+    const subResult = calculateSubResult();
+    setPrevNumber(`${subResult}`);
+  }, [formula]);
 
-    // Función para cambiar el signo del número actual
-    const toggleSing = () => {
-        // Lógica para cambiar el signo del número
-    };
+  const clean = () => {
+    setNumber('0');
+    setPrevNumber('0');
+    lastOperation.current = undefined;
+    setFormula('');
+  };
 
-    // Función para construir el número ingresado
-    const buildNumber = (numberString: string) => {
-        // Lógica para construir el número ingresado
-    };
 
-    // Función para establecer el último número y prepararse para una nueva operación
-    const setLastNumber = () => {
-        // Lógica para establecer el último número
-    };
+  const deleteOperation = () => {
+    let currentSign = '';
+    let temporalNumber = number;
+    if (number.includes('-')) {
+      currentSign = '-';
+      temporalNumber = number.substring(1); // 88
+    }
 
-    // Funciones para las operaciones aritméticas
-    const divideOperation = () => { /* Lógica para la operación de división */ };
-    const multiplyOperation = () => { /* Lógica para la operación de multiplicación */ };
-    const addOperation = () => { /* Lógica para la operación de suma */ };
-    const subtractOperation = () => { /* Lógica para la operación de resta */ };
+    if (temporalNumber.length > 1) {
+      return setNumber(currentSign + temporalNumber.slice(0, -1)); //
+    }
+    setNumber('0');
+  };
+  const toggleSign = () => {
+    if (number.includes('-')) {
+      return setNumber(number.replace('-', ''));
+    }
+    setNumber('-' + number);
+  };
 
-    // Función para calcular el resultado final
-    const calculateResult = () => {
-        // Lógica para calcular el resultado final
-    };
+  const buildNumber = (numberString: string) => {
 
-    // Función para calcular el resultado parcial (utilizado para actualizar el resultado mientras se escriben los números)
-    const calculateSubResult = () => {
-        // Lógica para calcular el resultado parcial
-    };
+    if (number.includes('.') && numberString === '.') {
+      return;
+    }
+    if (number.startsWith('0') || number.startsWith('-0')) {
 
-    // Efecto para actualizar la fórmula basada en el número actual y la última operación
-    useEffect(() => {
-        // Lógica para actualizar la fórmula
-    }, [number]);
+        if (numberString === '.') {
+        return setNumber(number + numberString);
+      }
 
-    // Efecto para calcular el resultado parcial basado en la fórmula actual
-    useEffect(() => {
-        // Lógica para calcular el resultado parcial
-    }, [formula]);
+      if (numberString === '0' && number.includes('.')) {
+        return setNumber(number + numberString);
+      }
 
-    // Retorna el estado y las funciones necesarias para utilizar la calculadora
-    return {
-        number,
-        prevNumber,
-        setLastNumber,
-        formula,
-        buildNumber,
-        toggleSing,
-        clean,
-        deleteOperation,
-        divideOperation,
-        multiplyOperation,
-        addOperation,
-        subtractOperation,
-        calculateResult,
-    };
+      if (numberString !== '0' && !number.includes('.')) {
+        return setNumber(numberString);
+      }
+
+      if (numberString === '0' && !number.includes('.')) {
+        return;
+      }
+      return setNumber(number + numberString);
+    }
+    setNumber(number + numberString);
+  };
+
+  const setLastNumber = () => {
+    calculateResult();
+    if (number.endsWith('.')) {
+      setPrevNumber(number.slice(0, -1));
+    } else {
+      setPrevNumber(number);
+    }
+    setNumber('0');
+  };
+
+  const divideOperation = () => {
+    setLastNumber();
+    lastOperation.current = Operator.divide;
+  };
+
+  const multiplyOperation = () => {
+    setLastNumber();
+    lastOperation.current = Operator.multiply;
+  };
+
+  const subtractOperation = () => {
+    setLastNumber();
+    lastOperation.current = Operator.subtract;
+  };
+
+  const addOperation = () => {
+    setLastNumber();
+    lastOperation.current = Operator.add;
+  };
+  const calculateResult = () => {
+    const result = calculateSubResult();
+    setFormula(`${result}`);
+    lastOperation.current = undefined;
+    setPrevNumber('0');
+  };
+
+  const calculateSubResult = (): number => {
+    const [firstValue, operation, secondValue] = formula.split(' ');
+
+    const num1 = Number(firstValue); 
+    const num2 = Number(secondValue); 
+
+    if (isNaN(num2)) {
+      return num1;
+    }
+
+    switch (operation) {
+      case Operator.add:
+        return num1 + num2;
+      case Operator.subtract:
+        return num1 - num2;
+      case Operator.multiply:
+        return num1 * num2;
+      case Operator.divide:
+        return num1 / num2;
+      default:
+        throw new Error('Operation not implemented');
+    }
+  };
+
+  return {
+
+    number,
+    prevNumber,
+    formula,
+
+    buildNumber,
+    toggleSign,
+    clean,
+    deleteOperation,
+    divideOperation,
+    multiplyOperation,
+    subtractOperation,
+    addOperation,
+    calculateResult,
+  };
 };
